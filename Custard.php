@@ -95,7 +95,8 @@ class CustardTemplate extends BaseTemplate
         if ( $this->data['username'] == 'ShermanTheMythran'
             || $this->data['username'] == 'SirComputer'
             || $this->data['username'] == 'ToaMeiko'
-            || $this->data['username'] == 'Root'
+            || $this->data['username'] == 'NXT'
+            || $this->data['username'] == 'UltrasonicNXT'
         ) { //temp whitelisting - until skin is properly functional ?>
             <div id="taskbar">
                 <div class="toggle">
@@ -374,7 +375,8 @@ class CustardTemplate extends BaseTemplate
             </div>
         <?php
         } else {
-            require "$IP/skins/custard/whitelist.php";
+			global $IP;
+            require_once("$IP/skins/custard/whitelist.php");
         } ?>
         </body>
         </html>
