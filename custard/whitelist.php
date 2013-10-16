@@ -10,11 +10,11 @@ echo "
     <div id='temp'>
         <div class='loader'>
             <div class='wrap'>
-                <img src='$IP/skins/custard/Images/loading.gif?action=purge' /><br/>
+                <img src='/skins/custard/Images/loading.gif?action=purge' /><br/>
                 p&nbsp;l&nbsp;e&nbsp;a&nbsp;s&nbsp;e&nbsp;&nbsp;&nbsp;w&nbsp;a&nbsp;i&nbsp;t&nbsp;.&nbsp;.&nbsp;.
             </div>
         </div>
-        <img src='$IP/skins/custard/Images/soon.jpg' alt='soon...' class='splash'/>
+        <img src='/skins/custard/Images/soon.jpg' alt='soon...' class='splash'/>
         <div class='infobar'>
             <div class='tag'>not yet, but soon...</div>
             <div class='info'>
