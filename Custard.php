@@ -14,8 +14,8 @@ if ( !defined('MEDIAWIKI') ) {
 }
 
 $wgValidSkinNames['custard'] = 'Custard';
-//$wgAutoloadClasses['SkinCustard'] = dirname(__FILE__).'/Custard.skin.php';
-//$wgExtensionMessagesFiles['Custard'] = dirname(__FILE__).'/Custard.i18n.php';
+//$wgAutoloadClasses['SkinCustard'] = "$IP/skins/custard/Custard.skin.php";
+//$wgExtensionMessagesFiles['Custard'] = "$IP/skins/custard/Custard.i18n.php";
 
 global $IP;
 
