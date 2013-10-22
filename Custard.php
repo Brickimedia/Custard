@@ -15,7 +15,7 @@ if ( !defined('MEDIAWIKI') ) {
 
 $wgValidSkinNames['custard'] = 'Custard';
 //$wgAutoloadClasses['SkinCustard'] = "$IP/skins/custard/Custard.skin.php";
-//$wgExtensionMessagesFiles['Custard'] = "$IP/skins/custard/Custard.i18n.php";
+$wgExtensionMessagesFiles['Custard'] = "$IP/skins/custard/Custard.i18n.php";
 
 global $IP;
 
@@ -24,14 +24,10 @@ $wgResourceModules['skins.custard'] = array(
         "$IP/skins/custard/CSS/custard.css" => array( 'media' => 'screen' ),
     ),
     'scripts' => array(
-        "$IP/resources/jquery/jquery.funcToggle.js",            //adding temporarily because dependencies aren't working
-        "$IP/resources/jquery/jquery.jPlayer.min.js",           // ""
-        "$IP/resources/jquery/jquery.jPlayer.playlist.min.js",  // ""
+        "$IP/resources/jquery/jquery.funcToggle.js",
+        "$IP/resources/jquery/jquery.jPlayer.min.js",
+        "$IP/resources/jquery/jquery.jPlayer.playlist.min.js",
         "$IP/skins/custard/JS/custard.js",
-    ),
-    'dependencies' => array(
-        //'jquery.funcToggle',
-        //'jquery.jPlayer',
     ),
     'remoteBasePath' => $GLOBALS['wgStylePath'],
     'localBasePath' => $GLOBALS['wgStyleDirectory'],
@@ -141,11 +137,11 @@ class CustardTemplate extends BaseTemplate
                         <ul class="menu">
                             <?php
                                 //echo wfMessage('navigation')->text();
-                                //$nav = explode('/n', wfMessage('Navigation')->parse);
+                                $nav = explode('/n', wfMessage('navigation')->parse);
                                 // OKAY, so it appears that messages (MediaWiki:Pagename) aren't quite working out just yet.
                                 // So what I'll do is temporarily import the raw text from the page.
                                 // The only real drawback is that it won't parse.
-                                $nav = explode('/n', file_get_contents("$IP/index.php?title=MediaWiki:Navigation&action=raw"));
+                                //$nav = explode('/n', require "$IP/index.php?title=MediaWiki:Navigation&action=raw");
                                 $lastUsed = 0;
             for ($navNum = 0; $navNum <= count($nav); $navNum++) {
                 if (substr($nav[$navNum], 0, 1) == '*') {

@@ -13,8 +13,13 @@ $messages = array();
  * @author Christopher Lazzaro
  */
 $messages['en'] = array(
-        'skinname-custard' => "Custard",
-        'custard-desc' => "Clean and modern skin originally developed for Brickimedia.org.",
+    'skinname-custard' => 'Custard',
+    'custard-desc' => 'Clean and modern skin originally developed for Brickimedia.org.',
+    'navigation' => '*Option 1 **Suboption 1 /n **Suboption 2 /n *Option 2',
+);
+
+$messages['qqq'] = array(
+    'navigation' => '*Option 1 **Suboption 1 /n **Suboption 2 /n *Option 2',
 );
 
 ?>
