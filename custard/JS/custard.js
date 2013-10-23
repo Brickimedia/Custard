@@ -31,7 +31,7 @@ $(document).ready(function () {
         $('#temp .info').stop(true, true).slideToggle(slow, easing);
     });
 
-    if ($('#temp')) {
+    if ($('#temp').length !== 0) {
         $(document.head).children('title').text('Custard: a New Face for Brickimedia');
     }
 

@@ -137,7 +137,7 @@ class CustardTemplate extends BaseTemplate
                         <ul class="menu">
                             <?php
                                 //echo wfMessage('navigation')->text();
-                                $nav = explode('/n', wfMessage('navigation')->parse);
+                                $nav = explode('/n', wfMessage('custard-navigation')->parse);
                                 // OKAY, so it appears that messages (MediaWiki:Pagename) aren't quite working out just yet.
                                 // So what I'll do is temporarily import the raw text from the page.
                                 // The only real drawback is that it won't parse.
