@@ -281,6 +281,24 @@ body {
     background: white;
 }
 
+#actions .submenu1, #actions .submenu2 {
+    position: absolute;
+    margin-top: -30px;
+    margin-left: 0;
+    background: #EFEFEF;
+    border-radius: 0 5px 5px 0;
+    z-index: -1;
+    -webkit-transition: margin 250ms linear;
+}
+
+#actions .menu li:hover .submenu1 {
+    margin-left: calc((100% - 120px) * .15);
+}
+
+#actions .menu li:hover .submenu1 {
+    margin-left: calc((100% - 120px) * .30);
+}
+
 #actions .search {
     line-height: 1.75em;
 }

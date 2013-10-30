@@ -170,7 +170,7 @@ class CustardTemplate extends BaseTemplate
                                 echo '<li>undefined<ul class="submenu1">';
                                 break;
                             case 1:
-                                echo '<ul class="menu">';
+                                echo '<ul class="submenu1">';
                                 break;
                             case 2:
                                 echo '</li>';
