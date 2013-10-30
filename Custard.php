@@ -93,6 +93,7 @@ class CustardTemplate extends BaseTemplate
             || $this->data['username'] == 'ToaMeiko'
             || $this->data['username'] == 'NXT'
             || $this->data['username'] == 'UltrasonicNXT'
+            || $this->data['username'] == 'Root'
         ) { //temp whitelisting - until skin is properly functional ?>
             <div id="taskbar">
                 <div class="toggle">
@@ -136,12 +137,7 @@ class CustardTemplate extends BaseTemplate
                         Navigation
                         <ul class="menu">
                             <?php
-                                //echo wfMessage('navigation')->text();
-                                $nav = explode('/n', wfMessage('custard-navigation')->parse);
-                                // OKAY, so it appears that messages (MediaWiki:Pagename) aren't quite working out just yet.
-                                // So what I'll do is temporarily import the raw text from the page.
-                                // The only real drawback is that it won't parse.
-                                //$nav = explode('/n', require "$IP/index.php?title=MediaWiki:Navigation&action=raw");
+                                $nav = explode("\n", wfMessage('custard-navigation')->escaped());
                                 $lastUsed = 0;
             for ($navNum = 0; $navNum <= count($nav); $navNum++) {
                 if (substr($nav[$navNum], 0, 1) == '*') {
@@ -161,10 +157,11 @@ class CustardTemplate extends BaseTemplate
                                 echo '</li>';
                                 break;
                             }
-                            if (!stristr($nav[$navNum], '|')) {
-                                $nav[$navNum] .= '|' . $nav[$navNum];
+                            $itemString = ltrim($nav[$navNum], "*");
+                            if (!stristr($itemString, '|')) {
+                                $itemString .= '|' . $itemString;
                             }
-                            $itemArray = explode('|', $nav[$navNum]);
+                            $itemArray = explode('|', $itemString);
                             echo '<li><a href="/wiki/'.str_replace(' ', '_', $itemArray[0]).'">'.$itemArray[1].'</a>';
                             $lastUsed = 3;
                         } else {
@@ -182,10 +179,11 @@ class CustardTemplate extends BaseTemplate
                                 echo '</li></ul>';
                                 break;
                             }
-                            if (!stristr($nav[$navNum], '|')) {
-                                $nav[$navNum] .= '|' . $nav[$navNum];
+                            $itemString = ltrim($nav[$navNum], "*");
+                            if (!stristr($itemString, '|')) {
+                                $itemString .= '|' . $itemString;
                             }
-                            $itemArray = explode('|', $nav[$navNum]);
+                            $itemArray = explode('|', $itemString);
                             echo '<li><a href="/wiki/'.str_replace(' ', '_', $itemArray[0]).'">'.$itemArray[1].'</a>';
                             $lastUsed = 2;
                         }
@@ -204,10 +202,11 @@ class CustardTemplate extends BaseTemplate
                             echo '</li></ul></li></ul>';
                             break;
                         }
-                        if (!stristr($nav[$navNum], '|')) {
-                            $nav[$navNum] .= '|' . $nav[$navNum];
+                        $itemString = ltrim($nav[$navNum], "*");
+                        if (!stristr($itemString, '|')) {
+                            $itemString .= '|' . $itemString;
                         }
-                        $itemArray = explode('|', $nav[$navNum]);
+                        $itemArray = explode('|', $itemString);
                         echo '<li><a href="/wiki/'.str_replace(' ', '_', $itemArray[0]).'">'.$itemArray[1].'</a>';
                         $lastUsed = 1;
                     }
