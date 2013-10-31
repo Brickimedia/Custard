@@ -285,6 +285,7 @@ body {
     position: absolute;
     margin-top: -30px;
     margin-left: 0;
+    padding: 5px 0;
     background: #EFEFEF;
     border-radius: 0 5px 5px 0;
     z-index: -1;
@@ -295,8 +296,8 @@ body {
     margin-left: calc((100% - 120px) * .15);
 }
 
-#actions .menu li:hover .submenu1 {
-    margin-left: calc((100% - 120px) * .30);
+#actions .menu li:hover .submenu2 {
+    margin-left: calc(((100% - 120px) * .15) + ((100% - 120px) * .15));
 }
 
 #actions .search {
@@ -480,7 +481,7 @@ body {
 }
 
 #tabs li.selected a {
-    background: white;
+    background: white !important;
 }
 
 #tabs a:hover {
@@ -532,6 +533,10 @@ body {
 
 #tabs a:hover + .invert::before, #tabs a:hover + .invert::after {
     border-color: #DFEDF6;
+}
+
+#tabs li.selected .invert::before, #tabs li.selected .invert::after {
+    border-color: white !important;
 }
 
 .printfooter {
