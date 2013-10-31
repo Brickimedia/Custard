@@ -76,12 +76,19 @@ class CustardTemplate extends BaseTemplate
     {
         global $wgTitle;
         global $wgUser;
+        global $wgAction;
 
         $ip = $wgUser->getRequest()->getIP();
 
-        function generateTab($href, $text)
+        function generateTab($href, $text, $action)
         {
-            echo '<li><a href="'.$href.'">'.$text.'</a><span class="invert"></span></li>';
+            $getAction = null;
+            if ($action == $getAction) {
+                $class = ' class="selected"';
+            } else {
+                $class = null;
+            }
+            echo '<li><a href="'.$href.'"'.$class.'>'.$text.'</a><span class="invert"></span></li>';
         }
 
         // Suppress warnings to prevent notices about missing indexes in $this->data
@@ -312,36 +319,35 @@ class CustardTemplate extends BaseTemplate
                 <div id="tabs">
                     <ul class="top">
                         <?php
+                            $getAction = $this->data['action'];
                             $isEditable = $wgTitle -> userCan('edit');
-                            generateTab('#read', 'Read');
+                            generateTab('?action=view', 'Read', 'view');
             if ( $isEditable ) {
                 if ( $wgUser -> isAllowed('edit') ) {
-                    generateTab('#edit', 'Edit');
+                    generateTab('?action=edit', 'Edit', 'edit');
                 } else {
-                    generateTab('#edit', 'View Source');
+                    generateTab('?action=edit', 'View Source', 'edit');
                 }
-                    generateTab('#history', 'History');
-                if ( $wgUser -> isAllowed('move') ) {
-                    generateTab('#move', 'Rename');
+                    generateTab('?action=history', 'History', 'history');
+                if ( $wgUser -> isAllowed('move') && $wgTitle -> isMovable() ) {
+                    generateTab('/wiki/Special:MovePage?title=' . str_replace(' ', '_', $wgTitle -> getNsText()) . str_replace(' ', '_', $wgTitle -> getEscapedText()), 'Rename');
                 }
                 if ( $wgUser -> isAllowed('delete') ) {
-                    generateTab('#delete', 'Delete');
+                    generateTab('?action=delete', 'Delete', 'delete');
                 }
             }
                         ?>
                     </ul>
                     <ul class="left">
                         <?php
-                        $canTalk = $wgTitle -> canTalk();
-                        $getNsText = $wgTitle -> getNsText();
-                        $getNamespace = $wgTitle -> getNamespace();
-            if ( $canTalk == 1 ) {
-                generateTab('#talk', 'Talk');
+            if ( $wgTitle -> canTalk() == 1 ) {
+                generateTab('/wiki/' . str_replace(' ', '_', $wgTitle -> getTalkPage()), 'Talk');
             }
-            if ( $getNamespace == 0 ) {
-                generateTab('#page', 'Page');
+            //if ( $wgTitle -> getNamespace() == 0 ) {
+            if ( $wgTitle -> isContentPage() ) {
+                generateTab(str_replace(('Talk:'|'_talk'), '', $wgTitle -> escapeLocalURL()), 'Page');
             } else {
-                generateTab('#page', $getNsText.' Page');
+                generateTab(str_replace('_talk', '', $wgTitle -> escapeLocalURL()), $wgTitle -> getNsText() . ' Page');
             }
                         ?>
                     </ul>
@@ -370,8 +376,8 @@ class CustardTemplate extends BaseTemplate
             </div>
         <?php
         } else {
-			global $IP;
-            require_once("$IP/skins/custard/whitelist.php");
+            global $IP;
+            include_once "$IP/skins/custard/whitelist.php";
         } ?>
         </body>
         </html>
