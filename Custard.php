@@ -25,6 +25,8 @@ $wgResourceModules['skins.custard'] = array(
         "$IP/skins/custard/CSS/custard.css" => array( 'media' => 'screen' ),
     ),
     'scripts' => array(
+        "$IP/resources/jquery.effects/jquery.effects.core.js",
+        "$IP/resources/jquery.effects/jquery.effects.drop.js",
         "$IP/resources/jquery/jquery.funcToggle.js",
         "$IP/resources/jquery/jquery.jPlayer.min.js",
         "$IP/resources/jquery/jquery.jPlayer.playlist.min.js",

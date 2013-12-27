@@ -61,13 +61,13 @@ class CustardTemplate extends BaseTemplate
         wfSuppressWarnings();
         $this->html('headelement'); ?>
 		<?php
-        if ( $this->data['username'] == 'ShermanTheMythran'
+        /* if ( $this->data['username'] == 'ShermanTheMythran'
             || $this->data['username'] == 'SirComputer'
             || $this->data['username'] == 'ToaMeiko'
             || $this->data['username'] == 'NXT'
             || $this->data['username'] == 'UltrasonicNXT'
             || $this->data['username'] == 'Root'
-        ) { //temp whitelisting - until skin is properly functional ?>
+        ) { //temp whitelisting - until skin is properly functional */ ?>
             <div id="taskbar">
                 <div class="toggle">
                     <span class="text">≡</span>
@@ -340,11 +340,18 @@ class CustardTemplate extends BaseTemplate
                 <?php $this->html('catlinks');
                 $this->printTrail(); ?>
             </div>
+            <div id="skin-notice">
+                <div class="wrapper">
+                    <h2>Welcome to Custard Open Beta!</h2>
+                    <p>Brickimedia's own unique "Custard" skin is now available for public viewing! Plese note that at this early stage, there are many features and functions missing, as well as any bugs. However, as development progresses, please file reports of any bugs you find <a href="https://github.com/Brickimedia/brickimedia/issues/new">in our Github repository</a>, and be sure to add the "custard" label so we can find and fix the issue more quickly. Feedback of any kind is also welcome, and we look forward to setting up Custard as the sleekest, smoothest browsing experience available on Brickimedia!</p>
+                    <div class="button">Alright, got it!</div>
+                </div>
+            </div>
         <?php
-        } else {
+        /* } else {
             global $IP;
             include_once "$IP/skins/custard/whitelist.php";
-        } ?>
+        } */ ?>
         </body>
         </html>
 	    <?php wfRestoreWarnings();

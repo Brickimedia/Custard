@@ -35,4 +35,9 @@ $(document).ready(function () {
         $(document.head).children('title').text('Custard: a New Face for Brickimedia');
     }
 
+    $('#skin-notice .button').click(function () {
+        $('#skin-notice').hide(slow, easing, "drop", { direction: "down" });
+        console.log("click!");
+    });
+
 });
