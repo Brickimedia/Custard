@@ -22,8 +22,7 @@ class SkinCustard extends SkinTemplate
     function setupSkinUserCss(OutputPage $out)
     {
         parent::setupSkinUserCss($out);
-        $out->addModuleStyles("skins.custard");     // ResourceModules styles
-        $out->addModuleScripts("skins.custard");    // ResourceModules scripts
+        $out->addModules('skins.custard');    // adding ResourceModules
     }
 
 }
