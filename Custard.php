@@ -14,27 +14,29 @@ if ( !defined('MEDIAWIKI') ) {
     die( -1 );
 }
 
-$wgValidSkinNames['custard'] = 'Custard';
-$wgAutoloadClasses['SkinCustard'] = __DIR__ . '/custard/Custard.skin.php';
-$wgExtensionMessagesFiles['Custard'] = __DIR__ . '/custard/Custard.i18n.php';
+$dir = dirname(__FILE__) . '/';
 
-global $IP;
+$wgValidSkinNames['custard'] = 'Custard';
+$wgAutoloadClasses['SkinCustard'] = $dir . 'custard/Custard.skin.php';
+$wgExtensionMessagesFiles['Custard'] = $dir . 'custard/Custard.i18n.php';
 
 $wgResourceModules['skins.custard'] = array(
     'styles' => array(
-        "$IP/skins/custard/CSS/custard.css" => array( 'media' => 'screen' ),
+        'skins/Custard/custard/CSS/custard.css' => array( 'media' => 'screen' ),
     ),
     'scripts' => array(
-        "$IP/resources/jquery.effects/jquery.effects.core.js",
-        "$IP/resources/jquery.effects/jquery.effects.drop.js",
-        "$IP/resources/jquery/jquery.funcToggle.js",
-        "$IP/resources/jquery/jquery.jPlayer.min.js",
-        "$IP/resources/jquery/jquery.jPlayer.playlist.min.js",
-        "$IP/skins/custard/JS/custard.js",
+        //'resources/jquery.effects/jquery.effects.drop.js',
+        'skins/Custard/custard/JS/funcToggle.js',
+        //'skins/Custard/custard/JS/jPlayer.min.js',
+        //'skins/Custard/custard/JS/jPlayer.playlist.min.js',
+        'skins/Custard/custard/JS/custard.js',
     ),
-    'remoteBasePath' => $GLOBALS['wgStylePath'],
-    'localBasePath' => $GLOBALS['wgStyleDirectory'],
+    'dependencies' => array(
+        'jquery.effects.drop',
+    ),
     'position' => 'top'
 );
+
+unset( $dir );
 
 ?>

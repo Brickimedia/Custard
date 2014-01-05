@@ -35,9 +35,19 @@ $(document).ready(function () {
         $(document.head).children('title').text('Custard: a New Face for Brickimedia');
     }
 
-    $('#skin-notice .button').click(function () {
-        $('#skin-notice').hide(slow, easing, "drop", { direction: "down" });
-        console.log("click!");
-    });
+    if ($.cookie('custard_notice') !== 'read') {
+        $('#skin-notice .wrapper').hide();
+        $('#skin-notice').fadeIn(slow, function () {
+            $('#skin-notice .wrapper').show("drop", { direction: "down" }, slow, easing);
+        });
+    }
+    else {
+        $('#skin-notice .button').on('click', function () {
+            $('#skin-notice .wrapper').hide("drop", { direction: "down" }, slow, easing, function () {
+                $('#skin-notice').fadeOut(slow);
+                $.cookie('custard_notice', 'read', { expires: 20 });
+            });
+        });
+    }
 
 });
