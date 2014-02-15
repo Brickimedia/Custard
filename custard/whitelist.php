@@ -1,10 +1,13 @@
 <?php
 /**
-	* Whitelist return page for Custard
-	* Active while skin is in early stages of development
-	*
-	* @file
-*/
+ * Whitelist return page for Custard
+ * Active while skin is in early stages of development
+ *
+ * @file
+ */
+if ( !defined( 'MEDIAWIKI' ) ) {
+	die();
+}
 
 echo "
 	<div id='temp'>
@@ -39,4 +42,3 @@ echo "
 		</div>
 	</div>
 ";
-?>
