@@ -1,64 +1,59 @@
 <?php
-
 /**
- * Skin file for skin My Skin.
+ * SkinTemplate class for Custard skin
  *
  * @file
  * @ingroup Skins
  */
-
-/**
- * SkinTemplate class for Custard skin
- *
- * @ingroup Skins
- */
-class SkinCustard extends SkinTemplate
-{
-	var $skinname = 'custard', $stylename = 'custard', $template = 'CustardTemplate', $useHeadElement = true;
+class SkinCustard extends SkinTemplate {
+	var $skinname = 'custard', $stylename = 'custard',
+		$template = 'CustardTemplate', $useHeadElement = true;
 	/**
-	 *
 	 * @param $out OutputPage object
 	 */
-	function setupSkinUserCss(OutputPage $out)
-	{
-		parent::setupSkinUserCss($out);
-		$out->addModules('skins.custard');	// adding ResourceModules
+	function setupSkinUserCss( OutputPage $out ) {
+		parent::setupSkinUserCss( $out );
+
+		// Load CSS via ResourceLoader
+		$out->addModuleStyles( 'skins.custard' );
+
+		// Load JS via ResourceLoader
+		$out->addModules( 'skins.custard' );
 	}
 
 }
 
 /**
- * BaseTemplate class for My Skin skin
+ * BaseTemplate class for Custard skin
  *
  * @ingroup Skins
  */
-class CustardTemplate extends BaseTemplate
-{
+class CustardTemplate extends BaseTemplate {
 	/**
 	 * Outputs the entire contents of the page
 	 */
-	public function execute()
-	{
-		global $wgTitle;
-		global $wgUser;
-		global $wgAction;
+	public function execute() {
+		$skin = $this->getSkin();
+		$ip = $skin->getRequest()->getIP();
+		$user = $skin->getUser();
+		$title = $skin->getTitle();
 
-		$ip = $wgUser->getRequest()->getIP();
-
-		function generateTab($href, $text, $action)
-		{
+		function generateTab( $href, $message, $action ) {
 			$getAction = null;
-			if ($action == $getAction) {
+
+			if ( $action == $getAction ) {
 				$class = ' class="selected"';
 			} else {
 				$class = null;
 			}
-			echo '<li><a href="'.$href.'"'.$class.'>'.$text.'</a><span class="invert"></span></li>';
+
+			echo '<li><a href="' . $href . '"' . $class . '>' . wfMessage( $message )->plain() .
+				'</a><span class="invert"></span></li>';
 		}
 
 		// Suppress warnings to prevent notices about missing indexes in $this->data
 		wfSuppressWarnings();
-		$this->html('headelement'); ?>
+		$this->html( 'headelement' ); ?>
 		<?php
 		/* if ( $this->data['username'] == 'ShermanTheMythran'
 			|| $this->data['username'] == 'SirComputer'
@@ -76,31 +71,31 @@ class CustardTemplate extends BaseTemplate
 				<?php
 			if ( $this->data['sitenotice'] ) { ?>
 					<div id="site-notice" class="notice">
-						<?php $this->html('sitenotice'); ?>
+						<?php $this->html( 'sitenotice' ); ?>
 					</div>
 				<?php
 			} ?>
 				<?php
 			if ( $this->data['newtalk'] ) { ?>
 				<div id="new-talk" class="message notice">
-					<?php $this->html('newtalk'); ?>
+					<?php $this->html( 'newtalk' ); ?>
 				</div>
 				<?php
 			} ?>
 				<div id="actions">
 					<div class="user module medium">
-						<?php echo $wgUser -> getName(); ?>
+						<?php echo $user->getName(); ?>
 						<ul class="menu">
-							<li><a href="/wiki/<?php echo str_replace(' ', '_', $wgUser -> getUserPage()); ?>">Userpage</a></li>
-							<li><a href="/wiki/<?php echo str_replace(' ', '_', $wgUser -> getTalkPage()); ?>">Talk</a></li>
+							<li><a href="<?php echo $user->getUserPage()->getFullURL(); ?>"><?php echo wfMessage( 'custard-user-page' )->plain() ?></a></li>
+							<li><a href="<?php echo $user->getTalkPage()->getFullURL(); ?>"><?php echo wfMessage( 'custard-talk' )->plain() ?></a></li>
 							<?php
-			if ($wgUser -> isLoggedIn()) { ?>
-							<li><a href="/wiki/User_blog:<?php echo $wgUser -> getTitleKey(); ?>">Blog</a></li>
-							<li><a href="/wiki/Special:Contributions">Contributions</a></li><?php
+			if ( $user->isLoggedIn() ) { ?>
+							<li><a href="<?php echo Title::newFromText( 'User_blog:' . $user->getTitleKey() )->getFullURL(); ?>"><?php echo wfMessage( 'custard-blog' )->plain() ?></a></li>
+							<li><a href="<?php echo SpecialPage::getTitleFor( 'Contributions' )->getFullURL() ?>"><?php echo wfMessage( 'mycontris' )->plain() ?></a></li><?php
 			} else { ?>
-							<li><a href="/wiki/Special:Contributions">Contributions</a></li>
-							<li><a href="/wiki/Special:UserLogin">Log In</a></li>
-							<li><a href="/wiki/Special:UserLogin/signup">Sign Up</a></li><?php
+							<li><a href="<?php echo SpecialPage::getTitleFor( 'Contributions' )->getFullURL() ?>"><?php echo wfMessage( 'mycontris' )->plain() ?></a></li>
+							<li><a href="<?php echo SpecialPage::getTitleFor( 'Userlogin' )->getFullURL() ?>"><?php echo wfMessage( 'login' )->plain() ?></a></li>
+							<li><a href="<?php echo SpecialPage::getTitleFor( 'Userlogin', 'signup' )->getFullURL() ?>"><?php echo wfMessage( 'custard-sign-up' )->plain() ?></a></li><?php
 			}
 							?>
 						</ul>
@@ -109,77 +104,77 @@ class CustardTemplate extends BaseTemplate
 						Navigation
 						<ul class="menu">
 							<?php
-								$nav = explode("\n", wfMessage('custard-navigation')->escaped());
+								$nav = explode( "\n", wfMessage( 'custard-navigation' )->escaped() );
 								$lastUsed = 0;
-			for ($navNum = 0; $navNum <= count($nav); $navNum++) {
-				if (substr($nav[$navNum], 0, 1) == '*') {
-					if (substr($nav[$navNum], 0, 2) == '**') {
-						if (substr($nav[$navNum], 0, 3) == '***') {
-							switch ($lastUsed) {
-							case 0:
-								echo '<li>undefined<ul class="submenu1"><li>undefined<ul class="submenu2">';
-								break;
-							case 1:
-								echo '<ul class="submenu1"><li>undefined<ul class="submenu2">';
-								break;
-							case 2:
-								echo '<ul class="submenu2">';
-								break;
-							case 3:
-								echo '</li>';
-								break;
+			for ( $navNum = 0; $navNum <= count( $nav ); $navNum++ ) {
+				if ( substr( $nav[$navNum], 0, 1 ) == '*' ) {
+					if ( substr( $nav[$navNum], 0, 2 ) == '**' ) {
+						if ( substr( $nav[$navNum], 0, 3 ) == '***' ) {
+							switch ( $lastUsed ) {
+								case 0:
+									echo '<li>undefined<ul class="submenu1"><li>undefined<ul class="submenu2">';
+									break;
+								case 1:
+									echo '<ul class="submenu1"><li>undefined<ul class="submenu2">';
+									break;
+								case 2:
+									echo '<ul class="submenu2">';
+									break;
+								case 3:
+									echo '</li>';
+									break;
 							}
-							$itemString = ltrim($nav[$navNum], "*");
-							if (!stristr($itemString, '|')) {
+							$itemString = ltrim( $nav[$navNum], '*' );
+							if ( !stristr( $itemString, '|' ) ) {
 								$itemString .= '|' . $itemString;
 							}
-							$itemArray = explode('|', $itemString);
-							echo '<li><a href="/wiki/'.str_replace(' ', '_', $itemArray[0]).'">'.$itemArray[1].'</a>';
+							$itemArray = explode( '|', $itemString );
+							echo '<li><a href="/wiki/' . str_replace( ' ', '_', $itemArray[0] ) . '">' . $itemArray[1] . '</a>';
 							$lastUsed = 3;
 						} else {
-							switch ($lastUsed) {
-							case 0:
-								echo '<li>undefined<ul class="submenu1">';
-								break;
-							case 1:
-								echo '<ul class="submenu1">';
-								break;
-							case 2:
-								echo '</li>';
-								break;
-							case 3:
-								echo '</li></ul>';
-								break;
+							switch ( $lastUsed ) {
+								case 0:
+									echo '<li>undefined<ul class="submenu1">';
+									break;
+								case 1:
+									echo '<ul class="submenu1">';
+									break;
+								case 2:
+									echo '</li>';
+									break;
+								case 3:
+									echo '</li></ul>';
+									break;
 							}
-							$itemString = ltrim($nav[$navNum], "*");
-							if (!stristr($itemString, '|')) {
+							$itemString = ltrim( $nav[$navNum], '*' );
+							if ( !stristr( $itemString, '|' ) ) {
 								$itemString .= '|' . $itemString;
 							}
-							$itemArray = explode('|', $itemString);
-							echo '<li><a href="/wiki/'.str_replace(' ', '_', $itemArray[0]).'">'.$itemArray[1].'</a>';
+							$itemArray = explode( '|', $itemString );
+							echo '<li><a href="/wiki/' . str_replace( ' ', '_', $itemArray[0] ) . '">' . $itemArray[1] . '</a>';
 							$lastUsed = 2;
 						}
 					} else {
-						switch ($lastUsed) {
-						case 0:
-							echo '';
-							break;
-						case 1:
-							echo '</li>';
-							break;
-						case 2:
-							echo '</li></ul>';
-							break;
-						case 3:
-							echo '</li></ul></li></ul>';
-							break;
+						switch ( $lastUsed ) {
+							case 0:
+								echo '';
+								break;
+							case 1:
+								echo '</li>';
+								break;
+							case 2:
+								echo '</li></ul>';
+								break;
+							case 3:
+								echo '</li></ul></li></ul>';
+								break;
 						}
-						$itemString = ltrim($nav[$navNum], "*");
-						if (!stristr($itemString, '|')) {
+						$itemString = ltrim( $nav[$navNum], '*' );
+						if ( !stristr( $itemString, '|' ) ) {
 							$itemString .= '|' . $itemString;
 						}
-						$itemArray = explode('|', $itemString);
-						echo '<li><a href="/wiki/'.str_replace(' ', '_', $itemArray[0]).'">'.$itemArray[1].'</a>';
+						$itemArray = explode( '|', $itemString );
+						echo '<li><a href="/wiki/' . str_replace( ' ', '_', $itemArray[0] ) . '">' . $itemArray[1] . '</a>';
 						$lastUsed = 1;
 					}
 				}
@@ -190,24 +185,25 @@ class CustardTemplate extends BaseTemplate
 					<div class="tools module medium">Tools</div>
 					<div class="search module medium">
 						<div id="search">
-							<form action="/index.php" method="GET">
-								<input type="text" name="search" placeholder="search" />
+							<form action="<?php $this->text( 'wgScript' ) ?>" id="searchform" class="searchform" method="get">
+								<input type="hidden" name="title" value="<?php $this->text( 'searchtitle' ) ?>"/>
+								<?php echo $this->makeSearchInput( array( 'id' => 'searchInput', 'name' => 'search' ) ); ?>
 							</form>
 						</div>
 					</div>
 					<div class="level module medium">Level</div>
 					<div class="chat module narrow">Chat</div>
 					<div class="watch module narrow <?php
-			if ($wgTitle -> isWatchable()) {
-				if ($wgTitle -> userIsWatching($this->data["title"])) {
-					echo "watching";
+			if ( $title->isWatchable() ) {
+				if ( $title->userIsWatching( $this->data['title'] ) ) {
+					echo 'watching';
 				}
 			} else {
-				echo "disabled";
-			} ?>" title="Watch">
+				echo 'disabled';
+			} ?>" title="<?php echo wfMessage( 'watch' )->plain() ?>">
 						<a<?php
-			if ($wgTitle -> isWatchable()) {
-				if ($wgTitle -> userIsWatching($this->data["title"])) {
+			if ( $title->isWatchable() ) {
+				if ( $title->userIsWatching( $this->data['title'] ) ) {
 					echo " href='?action=unwatch'";
 				} else {
 					echo " href='?action=watch'";
@@ -226,7 +222,7 @@ class CustardTemplate extends BaseTemplate
 						</a>
 					</div>
 					<div class="preferences module narrow">
-						<a href="/wiki/Special:Preferences" title="Preferences">
+						<a href="<?php echo SpecialPage::getTitleFor( 'Preferences' )->getFullURL() ?>" title="<?php echo wfMessage( 'preferences' )->plain() ?>">
 							<svg class="gear" width="20" height="20" xmlns="http://www.w3.org/2000/svg">
 								<!-- Created with SVG-edit - http://svg-edit.googlecode.com/ -->
 								<g>
@@ -285,58 +281,70 @@ class CustardTemplate extends BaseTemplate
 					<ul class="top">
 						<?php
 							$getAction = $this->data['action'];
-							$isEditable = $wgTitle -> userCan('edit');
-							generateTab('?action=view', 'Read', 'view');
-			if ( $isEditable ) {
-				if ( $wgUser -> isAllowed('edit') ) {
-					generateTab('?action=edit', 'Edit', 'edit');
-				} else {
-					generateTab('?action=edit', 'View Source', 'edit');
-				}
-					generateTab('?action=history', 'History', 'history');
-				if ( $wgUser -> isAllowed('move') && $wgTitle -> isMovable() ) {
-					generateTab('/wiki/Special:MovePage?title=' . str_replace(' ', '_', $wgTitle -> getNsText()) . str_replace(' ', '_', $wgTitle -> getEscapedText()), 'Rename');
-				}
-				if ( $wgUser -> isAllowed('delete') ) {
-					generateTab('?action=delete', 'Delete', 'delete');
-				}
-			}
+							$isEditable = $title->userCan( 'edit' );
+							generateTab( '?action=view', 'vector-view-view', 'view' );
+							if ( $isEditable ) {
+								if ( $user->isAllowed( 'edit' ) ) {
+									generateTab( '?action=edit', 'edit', 'edit' );
+								} else {
+									generateTab( '?action=edit', 'vector-view-viewsource', 'edit' );
+								}
+
+								generateTab( '?action=history', 'history_short', 'history' );
+
+								if ( $user->isAllowed( 'move' ) && $title->isMovable() ) {
+									generateTab(
+										/*
+										SpecialPage::getTitleFor( 'Movepage',
+											$title->getDBkey() )->getFullURL(),
+										*/
+										'/wiki/Special:MovePage?title=' .
+											str_replace( ' ', '_', $title->getNsText() ) .
+											str_replace( ' ', '_', $title->getEscapedText() ),
+										'custard-rename'
+									);
+								}
+
+								if ( $user->isAllowed( 'delete' ) ) {
+									generateTab( '?action=delete', 'delete', 'delete' );
+								}
+							}
 						?>
 					</ul>
 					<ul class="left">
 						<?php
-			if ( $wgTitle -> canTalk() == 1 ) {
-				generateTab('/wiki/' . str_replace(' ', '_', $wgTitle -> getTalkPage()), 'Talk');
-			}
-			//if ( $wgTitle -> getNamespace() == 0 ) {
-			if ( $wgTitle -> isContentPage() ) {
-				generateTab(str_replace(('Talk:'|'_talk'), '', $wgTitle -> escapeLocalURL()), 'Page');
-			} else {
-				generateTab(str_replace('_talk', '', $wgTitle -> escapeLocalURL()), $wgTitle -> getNsText() . ' Page');
-			}
+						if ( $title->canTalk() == 1 ) {
+							generateTab( $title->getTalkPage()->getFullURL(), 'talkpagelinktext' );
+						}
+
+						if ( $title->isContentPage() ) {
+							generateTab( str_replace( ( 'Talk:' | '_talk' ), '', $title->escapeLocalURL() ), 'nstab-main' );
+						} else {
+							generateTab( str_replace( '_talk', '', $title->escapeLocalURL() ), $title->getNsText() . ' Page' );
+						}
 						?>
 					</ul>
 				</div>
 				<h1 id="header">
-					<?php $this->html('title'); ?>
+					<?php $this->html( 'title' ); ?>
 				</h1>
 				<?php
 			if ( $this->data['subtitle'] ) { ?>
 					<div class="sub-header">
-						<?php $this->html('subtitle'); ?>
+						<?php $this->html( 'subtitle' ); ?>
 					</div>
 				<?php 
 			}
 			if ( $this->data['undelete'] ) { ?>
 					<div id="sub-header">
-						<?php $this->html('undelete'); ?>
+						<?php $this->html( 'undelete' ); ?>
 					</div>
 					<?php
 			} ?>
 					<div id="content">
-						<?php $this->html('bodytext') ?>
+						<?php $this->html( 'bodytext' ) ?>
 					</div>
-				<?php $this->html('catlinks');
+				<?php $this->html( 'catlinks' );
 				$this->printTrail(); ?>
 			</div>
 			<div id="skin-notice" style="display: none;">
@@ -356,5 +364,3 @@ class CustardTemplate extends BaseTemplate
 		<?php wfRestoreWarnings();
 	}
 }
-
-?>
