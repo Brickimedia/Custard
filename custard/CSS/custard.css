@@ -100,9 +100,11 @@ h6 {
 \**************************************/
 
 /* General */
+@import url('http://brickimedia.org/resources/fonts/opensans/opensans.css'); /* dropping this here until I can sort out relative paths and the rest of the fonts I'll be using */
+
 body {
 	background: #3d9ec8;
-	font-family: 'Segoe UI', sans-serif;
+	font-family: 'Open Sans', sans-serif;
 }
 
 /* Toolbar */
