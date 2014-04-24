@@ -1,3 +1,31 @@
+/* font imports, will organize when I get to it */
+@font-face {
+	font-family: Open Sans;
+	font-style: normal;
+	font-weight: normal;
+	src: url('OpenSans-Regular.woff'),
+		 url('OpenSans-Regular.ttf'),
+		 url('OpenSans-Regular.eot');
+}
+@font-face {
+	font-family: Open Sans;
+	font-style: italic;
+	font-weight: normal;
+	src: url('OpenSans-Italic.ttf');
+}
+@font-face {
+	font-family: Open Sans;
+	font-style: normal;
+	font-weight: bold;
+	src: url('OpenSans-Bold.ttf');
+}
+@font-face {
+	font-family: Open Sans;
+	font-style: italic;
+	font-weight: bold;
+	src: url('OpenSans-BoldItalic.ttf');
+}
+
 /*
  * CSS Reset based on code from 
  * http://meyerweb.com/eric/thoughts/2007/05/01/reset-reloaded/
@@ -100,8 +128,6 @@ h6 {
 \**************************************/
 
 /* General */
-@import url('http://brickimedia.org/resources/fonts/opensans/opensans.css'); /* dropping this here until I can sort out relative paths and the rest of the fonts I'll be using */
-
 body {
 	background: #3d9ec8;
 	font-family: 'Open Sans', sans-serif;
