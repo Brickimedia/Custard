@@ -255,7 +255,7 @@ class CustardTemplate extends BaseTemplate {
 				<div class="left">
 					<div class="shell">
 						<a href="#meta">Meta</a>
-						<a href="#pedia">Pedia</a>
+						<a href="#pedia">Brickipedia</a>
 						<a href="#customs">Customs
 							<div><span class="invert"></span></div>
 						</a>
@@ -269,8 +269,8 @@ class CustardTemplate extends BaseTemplate {
 						<a href="#stories">Stories
 							<div><span class="invert"></span></div>
 						</a>
-						<a href="#cuusoo">CUUSOO</a>
-						<a href="#dev">Dev</a>
+						<a href="#cuusoo">Ideas</a>
+						<a href="#books">Brickibooks</a>
 					</div>
 				</div>
 				<div class="clear"></div>
