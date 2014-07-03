@@ -25,14 +25,13 @@ $wgResourceModules['skins.custard'] = array(
 		'skins/Custard/custard/CSS/custard.css' => array( 'media' => 'screen' ),
 	),
 	'scripts' => array(
-		//'resources/jquery.effects/jquery.effects.drop.js',
 		'skins/Custard/custard/JS/funcToggle.js',
-		//'skins/Custard/custard/JS/jPlayer.min.js',
-		//'skins/Custard/custard/JS/jPlayer.playlist.min.js',
+        'skins/Custard/custard/JS/TweenLite.min.js',
+        //'skins/Custard/custard/JS/CSSPlugin.min.js',      - do not need yet, saving pageload time for now
+        //'skins/Custard/custard/JS/ScrollToPlugin.min.js', - " "
+        //'skins/Custard/custard/JS/EasePack.min.js',       - " "
+        //'skins/Custard/custard/JS/AttrPlugin.min.js',     - " "
 		'skins/Custard/custard/JS/custard.js',
-	),
-	'dependencies' => array(
-		'jquery.effects.drop',
 	),
 	'position' => 'top'
 );

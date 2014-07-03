@@ -674,7 +674,9 @@ body {
 	background: #65B2D3;
 }
 
-#skin-notice {
+#dialog {
+    display: none;
+    opacity: 0;
 	position: fixed;
 	width: 100%;
 	height: 100%;
@@ -683,24 +685,25 @@ body {
 	background: rgba(0, 0, 0, .2);
 }
 
-#skin-notice .wrapper {
+#dialog .box {
 	background: white;
 	max-width: 500px;
-	margin: 15% auto;
+	margin-left: auto;
+    margin-right: auto;
 	border-radius: 5px;
 	padding: 20px;
 }
 
-#skin-notice h2 {
+#dialog h2 {
 	text-align: center;
 }
 
-#skin-notice p {
+#dialog p {
 	margin: 20px 0 0;
 	text-align: justify;
 }
 
-#skin-notice .button {
+#dialog .button {
 	margin: 0 auto;
 	color: white;
 	background: #3d9ec8;
@@ -718,6 +721,6 @@ body {
 	-ms-transition: background 250ms linear;
 }
 
-#skin-notice .button:hover {
+#dialog .button:hover {
 	background: #65B2D3;
 }
