@@ -8,19 +8,28 @@
 class SkinCustard extends SkinTemplate {
 	var $skinname = 'custard', $stylename = 'custard',
 		$template = 'CustardTemplate', $useHeadElement = true;
+
 	/**
+	 * Load the skin-specific JavaScript via ResourceLoader.
+	 *
+	 * @param OutputPage $out
+	 */
+	public function initPage( OutputPage $out ) {
+		parent::initPage( $out );
+
+		$out->addModules( 'skins.custard.js' );
+	}
+
+	/**
+	 * Load the skin-specific CSS via ResourceLoader.
+	 *
 	 * @param $out OutputPage object
 	 */
 	function setupSkinUserCss( OutputPage $out ) {
 		parent::setupSkinUserCss( $out );
 
-		// Load CSS via ResourceLoader
-		//$out->addModuleStyles( 'skins.custard' );
-
-		// Load JS via ResourceLoader
-		$out->addModules( 'skins.custard' );
+		$out->addModuleStyles( 'skins.custard' );
 	}
-
 }
 
 /**
@@ -33,8 +42,9 @@ class CustardTemplate extends BaseTemplate {
 	 * Outputs the entire contents of the page
 	 */
 	public function execute() {
+		global $wgStylePath;
+
 		$skin = $this->getSkin();
-		$ip = $skin->getRequest()->getIP();
 		$user = $skin->getUser();
 		$title = $skin->getTitle();
 
@@ -47,12 +57,10 @@ class CustardTemplate extends BaseTemplate {
 				$class = null;
 			}
 
-			echo '<li><a href="' . $href . '"' . $class . '>' . wfMessage( $message )->plain() .
+			echo '<li><a href="' . $href . '"' . $class . '>' . $skin->msg( $message )->plain() .
 				'</a><span class="invert"></span></li>';
 		}
 
-		// Suppress warnings to prevent notices about missing indexes in $this->data
-		wfSuppressWarnings();
 		$this->html( 'headelement' ); ?>
 			<div id="taskbar">
 				<div class="toggle">
@@ -78,25 +86,25 @@ class CustardTemplate extends BaseTemplate {
 					<div class="user module medium">
 						<?php echo $user->getName(); ?>
 						<ul class="menu">
-							<li><a href="<?php echo $user->getUserPage()->getFullURL(); ?>"><?php echo wfMessage( 'custard-user-page' )->plain() ?></a></li>
-							<li><a href="<?php echo $user->getTalkPage()->getFullURL(); ?>"><?php echo wfMessage( 'custard-talk' )->plain() ?></a></li>
+							<li><a href="<?php echo $user->getUserPage()->getFullURL(); ?>"><?php echo $skin->msg( 'custard-user-page' )->plain() ?></a></li>
+							<li><a href="<?php echo $user->getTalkPage()->getFullURL(); ?>"><?php echo $skin->msg( 'custard-talk' )->plain() ?></a></li>
 							<?php
 			if ( $user->isLoggedIn() ) { ?>
-							<li><a href="<?php echo Title::newFromText( 'User_blog:' . $user->getTitleKey() )->getFullURL(); ?>"><?php echo wfMessage( 'custard-blog' )->plain() ?></a></li>
-							<li><a href="<?php echo SpecialPage::getTitleFor( 'Contributions' )->getFullURL() ?>"><?php echo wfMessage( 'mycontris' )->plain() ?></a></li><?php
+							<li><a href="<?php echo Title::newFromText( 'User_blog:' . $user->getTitleKey() )->getFullURL(); ?>"><?php echo $skin->msg( 'custard-blog' )->plain() ?></a></li>
+							<li><a href="<?php echo SpecialPage::getTitleFor( 'Contributions' )->getFullURL() ?>"><?php echo $skin->msg( 'mycontris' )->plain() ?></a></li><?php
 			} else { ?>
-							<li><a href="<?php echo SpecialPage::getTitleFor( 'Contributions' )->getFullURL() ?>"><?php echo wfMessage( 'mycontris' )->plain() ?></a></li>
-							<li><a href="<?php echo SpecialPage::getTitleFor( 'Userlogin' )->getFullURL() ?>"><?php echo wfMessage( 'login' )->plain() ?></a></li>
-							<li><a href="<?php echo SpecialPage::getTitleFor( 'Userlogin', 'signup' )->getFullURL() ?>"><?php echo wfMessage( 'custard-sign-up' )->plain() ?></a></li><?php
+							<li><a href="<?php echo SpecialPage::getTitleFor( 'Contributions' )->getFullURL() ?>"><?php echo $skin->msg( 'mycontris' )->plain() ?></a></li>
+							<li><a href="<?php echo SpecialPage::getTitleFor( 'Userlogin' )->getFullURL() ?>"><?php echo $skin->msg( 'login' )->plain() ?></a></li>
+							<li><a href="<?php echo SpecialPage::getTitleFor( 'Userlogin', 'signup' )->getFullURL() ?>"><?php echo $skin->msg( 'custard-sign-up' )->plain() ?></a></li><?php
 			}
 							?>
 						</ul>
 					</div>
 					<div class="navigation module medium">
-						Navigation
+						<?php echo $skin->msg( 'custard-navigation-title' )->plain() ?>
 						<ul class="menu">
 							<?php
-								$nav = explode( "\n", wfMessage( 'custard-navigation' )->escaped() );
+								$nav = explode( "\n", $skin->msg( 'custard-navigation' )->escaped() );
 								$lastUsed = 0;
 			for ( $navNum = 0; $navNum <= count( $nav ); $navNum++ ) {
 				if ( substr( $nav[$navNum], 0, 1 ) == '*' ) {
@@ -121,7 +129,12 @@ class CustardTemplate extends BaseTemplate {
 								$itemString .= '|' . $itemString;
 							}
 							$itemArray = explode( '|', $itemString );
-							echo '<li><a href="/wiki/' . str_replace( ' ', '_', $itemArray[0] ) . '">' . $itemArray[1] . '</a>';
+							if ( isset( $itemArray[0] ) && $itemArray[0] ) {
+								echo '<li>' . Linker::link(
+									Title::newFromText( $itemArray[0] ),
+									( isset( $itemArray[1] ) ? $itemArray[1] : $itemArray[0] )
+								) . '</li>';
+							}
 							$lastUsed = 3;
 						} else {
 							switch ( $lastUsed ) {
@@ -143,7 +156,12 @@ class CustardTemplate extends BaseTemplate {
 								$itemString .= '|' . $itemString;
 							}
 							$itemArray = explode( '|', $itemString );
-							echo '<li><a href="/wiki/' . str_replace( ' ', '_', $itemArray[0] ) . '">' . $itemArray[1] . '</a>';
+							if ( isset( $itemArray[0] ) && $itemArray[0] ) {
+								echo '<li>' . Linker::link(
+									Title::newFromText( $itemArray[0] ),
+									( isset( $itemArray[1] ) ? $itemArray[1] : $itemArray[0] )
+								) . '</li>';
+							}
 							$lastUsed = 2;
 						}
 					} else {
@@ -166,7 +184,12 @@ class CustardTemplate extends BaseTemplate {
 							$itemString .= '|' . $itemString;
 						}
 						$itemArray = explode( '|', $itemString );
-						echo '<li><a href="/wiki/' . str_replace( ' ', '_', $itemArray[0] ) . '">' . $itemArray[1] . '</a>';
+						if ( isset( $itemArray[0] ) && $itemArray[0] ) {
+							echo '<li>' . Linker::link(
+								Title::newFromText( $itemArray[0] ),
+								( isset( $itemArray[1] ) ? $itemArray[1] : $itemArray[0] )
+							) . '</li>';
+						}
 						$lastUsed = 1;
 					}
 				}
@@ -174,7 +197,7 @@ class CustardTemplate extends BaseTemplate {
 							?>
 						</ul>
 					</div>
-					<div class="tools module medium">Tools</div>
+					<div class="tools module medium"><?php echo $skin->msg( 'custard-tools' )->plain() ?></div>
 					<div class="search module medium">
 						<div id="search">
 							<form action="<?php $this->text( 'wgScript' ) ?>" id="searchform" class="searchform" method="get">
@@ -192,7 +215,7 @@ class CustardTemplate extends BaseTemplate {
 				}
 			} else {
 				echo 'disabled';
-			} ?>" title="<?php echo wfMessage( 'watch' )->plain() ?>">
+			} ?>" title="<?php echo $skin->msg( 'watch' )->plain() ?>">
 						<a<?php
 			if ( $title->isWatchable() ) {
 				if ( $title->userIsWatching( $this->data['title'] ) ) {
@@ -209,12 +232,12 @@ class CustardTemplate extends BaseTemplate {
 								</g>
 							</svg>
 							<!--[if lte IE 8]>
-								<?php echo "<object data='$IP/skins/custard/Images/eye.svg' type='image/svg+xml' class='eye'></object>"; ?>
+								<?php echo "<object data='{$wgStylePath}/custard/Images/eye.svg' type='image/svg+xml' class='eye'></object>"; ?>
 							<![endif]-->
 						</a>
 					</div>
 					<div class="preferences module narrow">
-						<a href="<?php echo SpecialPage::getTitleFor( 'Preferences' )->getFullURL() ?>" title="<?php echo wfMessage( 'preferences' )->plain() ?>">
+						<a href="<?php echo SpecialPage::getTitleFor( 'Preferences' )->getFullURL() ?>" title="<?php echo $skin->msg( 'preferences' )->plain() ?>">
 							<svg class="gear" width="20" height="20" xmlns="http://www.w3.org/2000/svg">
 								<!-- Created with SVG-edit - http://svg-edit.googlecode.com/ -->
 								<g>
@@ -236,7 +259,7 @@ class CustardTemplate extends BaseTemplate {
 								</g>
 							</svg>
 							<!--[if lte IE 8]>
-								<?php echo "<object data='$IP/skins/custard/Images/gear.svg' type='image/svg+xml' class='gear'></object>"; ?>
+								<?php echo "<object data='{$wgStylePath}/custard/Images/gear.svg' type='image/svg+xml' class='gear'></object>"; ?>
 							<![endif]-->
 						</a>
 					</div>
@@ -341,18 +364,13 @@ class CustardTemplate extends BaseTemplate {
 			</div>
 			<div id="dialog">
 				<div class="box">
-					<h2><?php echo wfMessage( 'custard-dialog-header' )->plain() ?></h2>
-					<p><?php echo wfMessage( 'custard-dialog-content' )->plain() ?></p>
-					<div class="button"><?php echo wfMessage( 'custard-dialog-button' )->plain() ?></div>
+					<h2><?php echo $skin->msg( 'custard-dialog-header' )->plain() ?></h2>
+					<p><?php echo $skin->msg( 'custard-dialog-content' )->text() ?></p>
+					<div class="button"><?php echo $skin->msg( 'custard-dialog-button' )->plain() ?></div>
 				</div>
 			</div>
-		<?php
-		/* } else {
-			global $IP;
-			include_once "$IP/skins/custard/whitelist.php";
-		} */ ?>
 		</body>
 		</html>
-		<?php wfRestoreWarnings();
+		<?php
 	}
 }
