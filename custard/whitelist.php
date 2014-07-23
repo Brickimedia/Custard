@@ -13,7 +13,7 @@ echo "
 	<div id='temp'>
 		<div class='loader'>
 			<div class='wrap'>
-				<img src='/skins/custard/Images/loading.gif?action=purge' /><br/>
+				<img src='/skins/custard/Images/loading.gif' /><br/>
 				p&nbsp;l&nbsp;e&nbsp;a&nbsp;s&nbsp;e&nbsp;&nbsp;&nbsp;w&nbsp;a&nbsp;i&nbsp;t&nbsp;.&nbsp;.&nbsp;.
 			</div>
 		</div>
@@ -32,11 +32,11 @@ echo "
 				<h2>What makes it so special?</h2>
 				<p>Custard is being designed to feel like a contained system, meaning it will seem like an app unto itself. As conceptualized, the interface will be minimalistic, navigation will be efficient, and you will be able to access anything from anywhere at any time.</p>
 				<h2>When will I be able to see it?</h2>
-				<p>There are currently no set dates for stages of development, but you can keep tabs on the <a href='https:\/\/github.com/Brickimedia/brickimedia/blob/master/wiki/skins/custard/todo.txt'>ToDo list</a>. Major updates will also be posted here.</p>
-				<i>If you have any further incquiries concerning Custard, you can always leave a message on <a href='http:\/\/meta.brickimedia.org/wiki/User_talk:ShermanTheMythran'>my talk page</a>. Thanks! ~Sherm</i>
+				<p>There are currently no set dates for stages of development, but you can keep tabs on the <a href='\/\/github.com/Brickimedia/Custard/blob/master/custard/TODO'>ToDo list</a>. Major updates will also be posted here.</p>
+				<i>If you have any further incquiries concerning Custard, you can always leave a message on <a href='\/\/meta.brickimedia.org/wiki/User_talk:ShermanTheMythran'>my talk page</a>. Thanks! ~Sherm</i>
 				<br/>
 				<div class='return'>
-					<a href='http:\/\/meta.brickimedia.org/wiki/Main_Page?useskin=refreshed'>return to Meta</a>
+					<a href='\/\/meta.brickimedia.org/index.php?title=Main_Page&useskin=refreshed'>return to Meta</a>
 				</div>
 			</div>
 		</div>

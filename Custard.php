@@ -20,7 +20,7 @@ $wgExtensionCredits['skin'][] = array(
 	'version' => '1.0',
 	'author' => 'Christopher Lazzaro',
 	'description' => 'Custard skin', // @todo Better description
-	'url' => 'https://www.mediawiki.org/wiki/Skin:Custard',
+	'url' => '//www.mediawiki.org/wiki/Skin:Custard',
 );
 
 $wgValidSkinNames['custard'] = 'Custard';
